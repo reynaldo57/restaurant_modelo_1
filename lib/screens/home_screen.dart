@@ -5,31 +5,31 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-// Widget buildCoffeCategory({categoryName, isSelected}) {
-//   return Padding(
-//     padding: const EdgeInsets.only(left: 20),
-//     child: Column(
-//       children: [
-//         Text(
-//           categoryName,
-//           style: TextStyle(
-//             fontWeight: FontWeight.bold,
-//             color: isSelected ? Color(0xffd17842) : Color(0xff52555a),
-//           ),
-//         ),
-//         isSelected
-//             ? Text(
-//                 ".",
-//                 style: TextStyle(
-//                   fontWeight: FontWeight.bold,
-//                   color: Color(0xffd17842),
-//                 ),
-//               )
-//             : Text("")
-//       ],
-//     ),
-//   );
-// }
+Widget buildCoffeCategory({categoryName, isSelected}) {
+  return Padding(
+    padding: const EdgeInsets.only(left: 20),
+    child: Column(
+      children: [
+        Text(
+          categoryName,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: isSelected ? Color(0xffd17842) : Color(0xff52555a),
+          ),
+        ),
+        isSelected
+            ? Text(
+                ".",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xffd17842),
+                ),
+              )
+            : Text("")
+      ],
+    ),
+  );
+}
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
@@ -40,126 +40,126 @@ class _HomeScreenState extends State<HomeScreen> {
   static List<Widget> _widgetOption = <Widget>[
     // HomePage(),
 
-    // Scaffold(
-    //   backgroundColor: Color(0xff0c0f14),
-    //   body: SafeArea(
-    //     child: SingleChildScrollView(
-    //       physics: BouncingScrollPhysics(),
-    //       child: Column(
-    //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-    //         children: [
-    //           SizedBox(
-    //             height: 20,
-    //           ),
-    //           Padding(
-    //             padding: const EdgeInsets.symmetric(horizontal: 20),
-    //             child: Row(
-    //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //               children: [
-    //                 Container(
-    //                   height: 40,
-    //                   width: 40,
-    //                   decoration: BoxDecoration(
-    //                     color: Color(0xff141921),
-    //                     borderRadius: BorderRadius.circular(10.0),
-    //                   ),
-    //                   child: Icon(
-    //                     Icons.grid_view_rounded,
-    //                     color: Color(0xFFFAFAFA),
-    //                     size: 20,
-    //                   ),
-    //                 ),
-    //                 Container(
-    //                   height: 40,
-    //                   width: 40,
-    //                   decoration: BoxDecoration(
-    //                       color: Color(0xff141921),
-    //                       borderRadius: BorderRadius.circular(10.0),
-    //                       image: DecorationImage(
-    //                           image: AssetImage("assets/images/logo.png"))),
-    //                 ),
-    //               ],
-    //             ),
-    //           ),
-    //           SizedBox(
-    //             height: 20,
-    //           ),
-    //           Padding(
-    //             padding: const EdgeInsets.symmetric(horizontal: 20),
-    //             child: Column(
-    //               crossAxisAlignment: CrossAxisAlignment.stretch,
-    //               children: [
-    //                 Text(
-    //                   "Fins the Best",
-    //                   style: TextStyle(
-    //                     fontSize: 30,
-    //                     fontWeight: FontWeight.w600,
-    //                     color: Colors.white,
-    //                   ),
-    //                 ),
-    //                 Text(
-    //                   "Coffe for You",
-    //                   style: TextStyle(
-    //                     fontSize: 30,
-    //                     fontWeight: FontWeight.w600,
-    //                     color: Colors.white,
-    //                   ),
-    //                 ),
-    //               ],
-    //             ),
-    //           ),
-    //           Padding(
-    //             padding:
-    //                 const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-    //             child: TextField(
-    //               style: TextStyle(color: Colors.white),
-    //               decoration: InputDecoration(
-    //                 prefixIcon: Icon(
-    //                   Icons.search,
-    //                   color: Color(0xff52555a),
-    //                 ),
-    //                 hintText: "Find Your Coffe",
-    //                 hintStyle: TextStyle(
-    //                   color: Color(0xff52555a),
-    //                 ),
-    //                 fillColor: Color(0xff141921),
-    //                 filled: true,
-    //                 border: OutlineInputBorder(
-    //                   borderSide: BorderSide.none,
-    //                   borderRadius: BorderRadius.circular(10.0),
-    //                 ),
-    //               ),
-    //             ),
-    //           ),
-    //           SingleChildScrollView(
-    //             physics: BouncingScrollPhysics(),
-    //             scrollDirection: Axis.horizontal,
-    //             child: Row(
-    //               children: [
-    //                 buildCoffeCategory(
-    //                     categoryName: "capuccino", isSelected: true
-    //                 ),
-    //                 buildCoffeCategory(
-    //                     categoryName: "Latte", isSelected: false
-    //                 ),
-    //                 buildCoffeCategory(
-    //                     categoryName: "Expresso", isSelected: false
-    //                 ),
-    //                 buildCoffeCategory(
-    //                     categoryName: "capuccino", isSelected: false
-    //                 ),
-    //               ],
-    //             ),
-    //           ),
-    //
-    //           SingleChildScrollView(
-    //
-    //           )
-    //         ],
-    //       ),
-    //     ),
-    //   ),
-    // ),
+    Scaffold(
+      backgroundColor: Color(0xff0c0f14),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      height: 40,
+                      width: 40,
+                      decoration: BoxDecoration(
+                        color: Color(0xff141921),
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      child: Icon(
+                        Icons.grid_view_rounded,
+                        color: Color(0xFFFAFAFA),
+                        size: 20,
+                      ),
+                    ),
+                    Container(
+                      height: 40,
+                      width: 40,
+                      decoration: BoxDecoration(
+                          color: Color(0xff141921),
+                          borderRadius: BorderRadius.circular(10.0),
+                          image: DecorationImage(
+                              image: AssetImage("assets/images/logo.png"))),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      "Fins the Best",
+                      style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                      ),
+                    ),
+                    Text(
+                      "Coffe for You",
+                      style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+                child: TextField(
+                  style: TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(
+                      Icons.search,
+                      color: Color(0xff52555a),
+                    ),
+                    hintText: "Find Your Coffe",
+                    hintStyle: TextStyle(
+                      color: Color(0xff52555a),
+                    ),
+                    fillColor: Color(0xff141921),
+                    filled: true,
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
+                ),
+              ),
+              SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    buildCoffeCategory(
+                        categoryName: "capuccino", isSelected: true
+                    ),
+                    buildCoffeCategory(
+                        categoryName: "Latte", isSelected: false
+                    ),
+                    buildCoffeCategory(
+                        categoryName: "Expresso", isSelected: false
+                    ),
+                    buildCoffeCategory(
+                        categoryName: "capuccino", isSelected: false
+                    ),
+                  ],
+                ),
+              ),
+
+              SingleChildScrollView(
+
+              )
+            ],
+          ),
+        ),
+      ),
+    ),
 
     Text(
       "Page1",
