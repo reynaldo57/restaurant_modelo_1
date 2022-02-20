@@ -118,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Icons.search,
                       color: Color(0xff52555a),
                     ),
-                    hintText: "Find Your Coffe",
+                    hintText: "Find Your Coffee",
                     hintStyle: TextStyle(
                       color: Color(0xff52555a),
                     ),
