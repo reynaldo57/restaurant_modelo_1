@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant_modelo_1/screens/home_screen.dart';
+import 'package:restaurant_modelo_1/screens/home_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'restaurant-1',
-      home: HomeScreen(),
+      home: HomePage(),
 
     );
   }
