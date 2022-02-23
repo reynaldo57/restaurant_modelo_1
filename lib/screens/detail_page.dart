@@ -5,6 +5,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:restaurant_modelo_1/screens/home_page.dart';
 
 class DetailPage extends StatelessWidget {
+
+  Map<String, dynamic>? product;
+  DetailPage({this.product});
+
+
   static var screenHeight;
   static var screenWidth;
   @override
@@ -27,8 +32,8 @@ class DetailPage extends StatelessWidget {
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           fit: BoxFit.cover,
-                          image: AssetImage(
-                            "assets/images/cebiche detail.jpg",
+                          image: NetworkImage(
+                            this.product!["image"],
                           ),
                         ),
                         borderRadius: BorderRadius.circular(30.0),
@@ -66,7 +71,7 @@ class DetailPage extends StatelessWidget {
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    "Cappuccino",
+                                                    this.product!["name"],
                                                     style: TextStyle(
                                                       color: Colors.white,
                                                       fontSize: 20.0,
@@ -78,7 +83,7 @@ class DetailPage extends StatelessWidget {
                                                     height: 3,
                                                   ),
                                                   Text(
-                                                    "With Oat Milk",
+                                                    this.product!["description"],
                                                     style: TextStyle(
                                                       fontSize: 10.0,
                                                       color: Color(0xffaeaeae),
@@ -98,7 +103,7 @@ class DetailPage extends StatelessWidget {
                                                     ),
                                                   ),
                                                   Text(
-                                                    "\t4.5\t",
+                                                    this.product!["rate"].toStringAsFixed(1),
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                       color: Colors.white,
@@ -321,7 +326,7 @@ class DetailPage extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                    "4.20",
+                                    "S/. ${this.product!["price"].toStringAsFixed(2)}",
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
