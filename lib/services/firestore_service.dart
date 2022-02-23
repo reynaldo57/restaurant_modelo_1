@@ -12,9 +12,9 @@ class FirestoreService {
       .collection(this.collection);
 
 
-  Future <List<Map<String, dynamic>>> getProductHome() async {
+  Future <List<Map<String, dynamic>>> getProductHome({String? categoryId}) async {
     List<Map<String, dynamic>> products = [];
-    QuerySnapshot _collectionReference = await _firestoreReferences.get();
+    QuerySnapshot _collectionReference = await _firestoreReferences.where('category', isEqualTo: categoryId).get();
     _collectionReference.docs.forEach((QueryDocumentSnapshot element) {
       Map <String, dynamic> product = element.data() as Map<String, dynamic>;
       product["id"] = element.id;
