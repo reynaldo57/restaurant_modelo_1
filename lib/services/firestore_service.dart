@@ -23,4 +23,19 @@ class FirestoreService {
 
     return products;
   }
+
+  Future<List<Map<String, dynamic>>> getAllProducts() async{
+    List<Map<String, dynamic>> Products = [];
+    QuerySnapshot _collectionReference = await _firestoreReferences.get();
+    _collectionReference.docs.forEach((element) {
+      Map<String, dynamic> productMap = element.data() as Map<String, dynamic>;
+      productMap['id'] = element.id;
+      Products.add(productMap);
+    });
+    return Products;
+  }
+
+
+
+
 }

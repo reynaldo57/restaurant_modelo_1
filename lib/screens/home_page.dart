@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_modelo_1/screens/detail_page.dart';
 import 'package:restaurant_modelo_1/services/firestore_service.dart';
+import 'package:restaurant_modelo_1/utils/search_product.dart';
 
 class HomePage extends StatelessWidget {
 
@@ -53,7 +54,7 @@ class HomePage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Text(
-                      "Fins the Best",
+                      "Finds the Best",
                       style: TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.w600,
@@ -71,29 +72,57 @@ class HomePage extends StatelessWidget {
                   ],
                 ),
               ),
-              Padding(
+              Container(
+                alignment: Alignment.center,
+                margin: EdgeInsets.symmetric(horizontal: 10),
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-                child: TextField(
-                  style: TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(
-                      Icons.search,
-                      color: Color(0xff52555a),
+                EdgeInsets.symmetric(horizontal: 50),
+                height: 54,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20.0),
+                  boxShadow: [
+                    BoxShadow(
+                      offset: Offset(0, 10),
+                      blurRadius: 50,
+                      color: Colors.deepOrangeAccent,
                     ),
-                    hintText: "Find Your Coffee",
-                    hintStyle: TextStyle(
-                      color: Color(0xff52555a),
+                  ],
+                ),
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: TextField(
+                        onChanged: (value) {},
+                        decoration: InputDecoration(
+                          hintText: "search",
+                          hintStyle: TextStyle(
+                            color: Colors.blue,
+                          ),
+                          enabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                        ),
+                      ),
                     ),
-                    fillColor: Color(0xff141921),
-                    filled: true,
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                  ),
+                    //SvgPicture.asset("assets/icons/search.svg"),
+                    IconButton(
+                        onPressed: () async {
+                          final result = await showSearch(
+                              context: context,
+                              delegate: SearchProduct(
+                                  listProducts:
+                                  await _productFirestoreService
+                                      .getAllProducts()));
+                        },
+                        icon: Icon(
+                          Icons.search,
+                          color: Colors.black,
+                        ),
+                    )
+                  ],
                 ),
               ),
+
               FutureBuilder(
                   future: _productFirestoreService.getProductHome(categoryId: "PH0REIrqVbYaLQurQGkC"),
                   builder: (BuildContext context, AsyncSnapshot snap){

@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -5,10 +6,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:restaurant_modelo_1/screens/home_page.dart';
 
 class DetailPage extends StatelessWidget {
-
   Map<String, dynamic>? product;
   DetailPage({this.product});
-
 
   static var screenHeight;
   static var screenWidth;
@@ -83,7 +82,8 @@ class DetailPage extends StatelessWidget {
                                                     height: 3,
                                                   ),
                                                   Text(
-                                                    this.product!["description"],
+                                                    this.product![
+                                                        "description"],
                                                     style: TextStyle(
                                                       fontSize: 10.0,
                                                       color: Color(0xffaeaeae),
@@ -103,7 +103,9 @@ class DetailPage extends StatelessWidget {
                                                     ),
                                                   ),
                                                   Text(
-                                                    this.product!["rate"].toStringAsFixed(1),
+                                                    this
+                                                        .product!["rate"]
+                                                        .toStringAsFixed(1),
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                       color: Colors.white,
@@ -231,7 +233,6 @@ class DetailPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
-
                             height: 40.0,
                             width: 40.0,
                             decoration: BoxDecoration(
@@ -272,90 +273,93 @@ class DetailPage extends StatelessWidget {
                   ],
                 ),
               ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+              SizedBox(
+                height: 60,
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 10.0),
+                child: Row(
+                  children: [
+                    Text(
+                      "Ingredientes Principlaes",
+                      style: TextStyle(
+                        color: Colors.white70,
+                        fontSize: 16.0,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                margin: EdgeInsets.only(right: 220),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: this.product!["ingredients"].map<Widget>((item)=>Text(
+                    "- $item",
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),).toList(),
+                ),
+              ),
+
+              SizedBox(
+                height: 140,
+              ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
                     children: [
                       Text(
-                        "Description",
+                        "Price",
                         style: TextStyle(
-                          fontSize: 20.0,
                           color: Color(0xffaeaeae),
                         ),
                       ),
-
-                      Text(
-                        "A cappuccino is a coffee -bassed drink made",
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
+                      SizedBox(
+                        height: 3,
                       ),
-
-                      Text(
-                        "primrily from espresso and milk",
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-
-
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Column(
-                            children: [
-                              Text(
-                                "Price",
-                                style: TextStyle(
-                                  color: Color(0xffaeaeae),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 3,
-                              ),
-                              Row(
-                                children: [
-                                  Text(
-                                    "\$\t",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xffd17842),
-                                    ),
-                                  ),
-                                  Text(
-                                    "S/. ${this.product!["price"].toStringAsFixed(2)}",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ],
-                          ),
-                          MaterialButton(
-                            onPressed: () {},
-                            height: 55,
-                            minWidth: 200,
-                            color: Color(0xffd17842),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20.0),
+                          Text(
+                            "\$\t",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xffd17842),
                             ),
-                            child: Text(
-                              "Buy Now",
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
+                          ),
+                          Text(
+                            "S/. ${this.product!["price"].toStringAsFixed(2)}",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
                             ),
                           )
                         ],
-                      )
+                      ),
                     ],
                   ),
-                ),
+                  MaterialButton(
+                    onPressed: () {},
+                    height: 55,
+                    minWidth: 200,
+                    color: Color(0xffd17842),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    child: Text(
+                      "Buy Now",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  )
+                ],
               )
             ],
           ),
