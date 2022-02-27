@@ -17,6 +17,7 @@ class _ModalAddEditCategoryState extends State<ModalAddEditCategory> {
   FirestoreService _firestoreService = new FirestoreService(collection: "categories");
 
   bool _order = false;
+  TextEditingController _categoryController = new TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -30,10 +31,11 @@ class _ModalAddEditCategoryState extends State<ModalAddEditCategory> {
           mainAxisSize: MainAxisSize.min,
           children: [
             TextFormField(
-              decoration: InputDecoration(hintText: "descripcion"),
+              controller: _categoryController,
+              decoration: InputDecoration(hintText: "categoria"),
               validator: (String? value){
                 if(value == null || value.isEmpty){
-                  return "Campo descripcion Obligatorio";
+                  return "Campo categoria Obligatorio";
                 };
                 return null;
               },
@@ -64,6 +66,12 @@ class _ModalAddEditCategoryState extends State<ModalAddEditCategory> {
         ),
         TextButton(
           onPressed: () {
+            if(_formKey.currentState!.validate()){
+              _firestoreService.addFiresrtore({
+                "description": _categoryController.text,
+                "order": _order,
+              });
+            }
             if(_formKey.currentState!.validate()){
 
             }
