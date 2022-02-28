@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:restaurant_modelo_1/admin/product_add_edit_admin_page.dart';
 import 'package:restaurant_modelo_1/services/firestore_service.dart';
 
 class ProductAdminPage extends StatelessWidget {
@@ -15,6 +16,7 @@ class ProductAdminPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: (){
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductAddEditAdminPage()));
 
         },
         child: Icon(Icons.add),
