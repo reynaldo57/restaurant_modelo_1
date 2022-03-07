@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:restaurant_modelo_1/services/firestore_service.dart';
 
 class ProductAddEditAdminPage extends StatefulWidget {
@@ -19,6 +22,8 @@ class _ProductAddEditAdminPageState extends State<ProductAddEditAdminPage> {
   List<Map<String, dynamic>> categories = [];
   List<String> ingredients = [];
   String selectCategory = "";
+  ImagePicker _picker = new ImagePicker();
+  XFile? image;
 
   @override
   initState() {
@@ -32,6 +37,13 @@ class _ProductAddEditAdminPageState extends State<ProductAddEditAdminPage> {
       selectCategory = categories[0]["id"];
       setState(() {});
     });
+  }
+
+  getImageGallery() async {
+    XFile? selectImageGallery =
+        await _picker.pickImage(source: ImageSource.gallery);
+    image = selectImageGallery;
+    setState(() {});
   }
 
   @override
@@ -161,11 +173,12 @@ class _ProductAddEditAdminPageState extends State<ProductAddEditAdminPage> {
                       onPressed: () {
                         ingredients.add(_ingredientController.text);
                         _ingredientController.clear();
-                        setState(() {
-
-                        });
+                        setState(() {});
                       },
-                      child: Icon(Icons.add, color: Colors.white,),
+                      child: Icon(
+                        Icons.add,
+                        color: Colors.white,
+                      ),
                       color: Colors.deepPurpleAccent,
                     ),
                   ],
@@ -175,28 +188,53 @@ class _ProductAddEditAdminPageState extends State<ProductAddEditAdminPage> {
                 ),
                 SizedBox(
                   height: 260,
-                  child: ingredients.length > 0 ? ListView.builder(
-                    primary: true,
-                    shrinkWrap: true,
-                    physics: ScrollPhysics(),
-                    itemCount: ingredients.length,
-                    itemBuilder: (BuildContext context, int index){
-                      return ListTile(
-                      title: Text(ingredients[index]),
-                        trailing: IconButton(
-                          icon: Icon(Icons.delete),
-                          onPressed: (){
-                            ingredients.removeAt(index);
-                            setState(() {
-
-                            });
-                          },
+                  child: ingredients.length > 0
+                      ? ListView.builder(
+                          primary: true,
+                          shrinkWrap: true,
+                          physics: ScrollPhysics(),
+                          itemCount: ingredients.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return ListTile(
+                              title: Text(ingredients[index]),
+                              trailing: IconButton(
+                                icon: Icon(Icons.delete),
+                                onPressed: () {
+                                  ingredients.removeAt(index);
+                                  setState(() {});
+                                },
+                              ),
+                            );
+                          })
+                      : Center(
+                          child: Text("no hay ingredientes"),
                         ),
-                      );
-                  }
-                  ) : Center(child: Text("no hay ingredientes"),),
                 ),
-
+                SizedBox(
+                  height: 10.0,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text("Imagen del Producto"),
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        getImageGallery();
+                      },
+                      icon: Icon(Icons.photo),
+                      label: Text("Galeria"),
+                    ),
+                    ElevatedButton.icon(
+                      onPressed: () {},
+                      icon: Icon(Icons.photo),
+                      label: Text("Camara"),
+                    ),
+                  ],
+                ),
+                image != null ? Image.file(File(image!.path)) : Text("No hay Imagen",),
+                SizedBox(
+                  height: 70.0,
+                ),
               ],
             ),
           ),
