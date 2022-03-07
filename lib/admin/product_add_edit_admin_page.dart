@@ -14,7 +14,10 @@ class _ProductAddEditAdminPageState extends State<ProductAddEditAdminPage> {
   final _formKey = GlobalKey<FormState>();
   FirestoreService _categoryFirestoreService =
       new FirestoreService(collection: 'categories');
+  TextEditingController _ingredientController = new TextEditingController();
+
   List<Map<String, dynamic>> categories = [];
+  List<String> ingredients = [];
   String selectCategory = "";
 
   @override
@@ -75,6 +78,7 @@ class _ProductAddEditAdminPageState extends State<ProductAddEditAdminPage> {
                   },
                 ),
                 DropdownButtonFormField<String>(
+                  style: TextStyle(color: Colors.black87),
                   decoration: InputDecoration(
                       labelText: "Categoria",
                       hintText: "--Selecciona una categoria--"),
@@ -131,6 +135,68 @@ class _ProductAddEditAdminPageState extends State<ProductAddEditAdminPage> {
                     return null;
                   },
                 ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextFormField(
+                        controller: _ingredientController,
+                        decoration: InputDecoration(
+                            labelText: "Ingrediente",
+                            hintText: "Ingrediente del producto"),
+                        validator: (String? value) {
+                          if (value == null || value.isEmpty) {
+                            return "Completar el ampo";
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      width: 10.0,
+                    ),
+                    MaterialButton(
+                      onPressed: () {
+                        ingredients.add(_ingredientController.text);
+                        _ingredientController.clear();
+                        setState(() {
+
+                        });
+                      },
+                      child: Icon(Icons.add, color: Colors.white,),
+                      color: Colors.deepPurpleAccent,
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  width: 70.0,
+                ),
+                SizedBox(
+                  height: 260,
+                  child: ingredients.length > 0 ? ListView.builder(
+                    primary: true,
+                    shrinkWrap: true,
+                    physics: ScrollPhysics(),
+                    itemCount: ingredients.length,
+                    itemBuilder: (BuildContext context, int index){
+                      return ListTile(
+                      title: Text(ingredients[index]),
+                        trailing: IconButton(
+                          icon: Icon(Icons.delete),
+                          onPressed: (){
+                            ingredients.removeAt(index);
+                            setState(() {
+
+                            });
+                          },
+                        ),
+                      );
+                  }
+                  ) : Center(child: Text("no hay ingredientes"),),
+                ),
+
               ],
             ),
           ),
