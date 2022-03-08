@@ -1,5 +1,6 @@
 import 'dart:io';
-
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -15,8 +16,12 @@ class ProductAddEditAdminPage extends StatefulWidget {
 
 class _ProductAddEditAdminPageState extends State<ProductAddEditAdminPage> {
   final _formKey = GlobalKey<FormState>();
+
   FirestoreService _categoryFirestoreService =
       new FirestoreService(collection: 'categories');
+
+  firebase_storage.FirebaseStorage _storage = firebase_storage.FirebaseStorage.instance;
+
   TextEditingController _ingredientController = new TextEditingController();
 
   List<Map<String, dynamic>> categories = [];
@@ -53,6 +58,12 @@ class _ProductAddEditAdminPageState extends State<ProductAddEditAdminPage> {
     setState(() {});
   }
 
+  uploadImageFirebase()async{
+    firebase_storage.Reference reference = _storage.ref().child('Products');
+    firebase_storage.TaskSnapshot upload = await reference.child("mandarina.jpg").putFile(File(image!.path),);
+    print(upload);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,7 +72,8 @@ class _ProductAddEditAdminPageState extends State<ProductAddEditAdminPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          if (_formKey.currentState!.validate()) {}
+          // if (_formKey.currentState!.validate()) {}
+          uploadImageFirebase();
         },
         child: Icon(Icons.save),
       ),
