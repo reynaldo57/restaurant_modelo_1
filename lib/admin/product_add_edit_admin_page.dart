@@ -60,8 +60,9 @@ class _ProductAddEditAdminPageState extends State<ProductAddEditAdminPage> {
 
   uploadImageFirebase()async{
     firebase_storage.Reference reference = _storage.ref().child('Products');
-    firebase_storage.TaskSnapshot upload = await reference.child("mandarina.jpg").putFile(File(image!.path),);
-    print(upload);
+    String time = DateTime.now().toString();
+    firebase_storage.TaskSnapshot upload = await reference.child("$time.jpg").putFile(File(image!.path),);
+    String url = await upload.ref.getDownloadURL();
   }
 
   @override
