@@ -46,6 +46,13 @@ class _ProductAddEditAdminPageState extends State<ProductAddEditAdminPage> {
     setState(() {});
   }
 
+  getImageCamera() async {
+    XFile? selectImageCamera =
+    await _picker.pickImage(source: ImageSource.camera);
+    image = selectImageCamera;
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -225,13 +232,30 @@ class _ProductAddEditAdminPageState extends State<ProductAddEditAdminPage> {
                       label: Text("Galeria"),
                     ),
                     ElevatedButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+                        getImageCamera();
+                      },
                       icon: Icon(Icons.photo),
                       label: Text("Camara"),
                     ),
                   ],
                 ),
-                image != null ? Image.file(File(image!.path)) : Text("No hay Imagen",),
+                SizedBox(
+                  height: 12.0,
+                ),
+                image != null
+                    ? Container(
+                        height: 200,
+                        width: double.infinity,
+                        child: Image.file(
+                          File(image!.path),
+                          fit: BoxFit.cover,
+                        ),
+
+                      )
+                    : Text(
+                        "No hay Imagen",
+                      ),
                 SizedBox(
                   height: 70.0,
                 ),
