@@ -18,9 +18,19 @@ class _ProductAddEditAdminPageState extends State<ProductAddEditAdminPage> {
   final _formKey = GlobalKey<FormState>();
 
   FirestoreService _categoryFirestoreService =
-      new FirestoreService(collection: 'categories');
+      new FirestoreService(collection: 'products');
 
-  firebase_storage.FirebaseStorage _storage = firebase_storage.FirebaseStorage.instance;
+  FirestoreService _productFirestoreService =
+  new FirestoreService(collection: 'categories');
+
+  firebase_storage.FirebaseStorage _storage =
+      firebase_storage.FirebaseStorage.instance;
+
+  TextEditingController _nameController = new TextEditingController();
+  TextEditingController _descriptionController = new TextEditingController();
+  TextEditingController _priceController = new TextEditingController();
+  TextEditingController _timeController = new TextEditingController();
+  TextEditingController _rateController = new TextEditingController();
 
   TextEditingController _ingredientController = new TextEditingController();
 
@@ -53,16 +63,37 @@ class _ProductAddEditAdminPageState extends State<ProductAddEditAdminPage> {
 
   getImageCamera() async {
     XFile? selectImageCamera =
-    await _picker.pickImage(source: ImageSource.camera);
+        await _picker.pickImage(source: ImageSource.camera);
     image = selectImageCamera;
     setState(() {});
   }
 
-  uploadImageFirebase()async{
+  uploadImageFirebase() async {
     firebase_storage.Reference reference = _storage.ref().child('Products');
     String time = DateTime.now().toString();
-    firebase_storage.TaskSnapshot upload = await reference.child("$time.jpg").putFile(File(image!.path),);
+    firebase_storage.TaskSnapshot upload =
+        await reference.child("$time.jpg").putFile(
+              File(image!.path),
+            );
     String url = await upload.ref.getDownloadURL();
+    saveProduct(url);
+  }
+
+  saveProduct(String urlImage){
+    Map<String, dynamic> product = {
+      "category": selectCategory,
+      "description": _descriptionController.text,
+      "discount": null,
+      "image": urlImage,
+      "ingredients": ingredients,
+      "name": _nameController.text,
+      "price": double.parse(_priceController.text),
+      "time": int.parse(_timeController.text),
+      "rate": double.parse(_rateController.text),
+    };
+
+    _productFirestoreService.addFiresrtore(product);
+
   }
 
   @override
@@ -73,7 +104,7 @@ class _ProductAddEditAdminPageState extends State<ProductAddEditAdminPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // if (_formKey.currentState!.validate()) {}
+          if (_formKey.currentState!.validate()) {}
           uploadImageFirebase();
         },
         child: Icon(Icons.save),
@@ -86,8 +117,11 @@ class _ProductAddEditAdminPageState extends State<ProductAddEditAdminPage> {
             child: Column(
               children: [
                 TextFormField(
+                  controller: _nameController,
                   decoration: InputDecoration(
-                      labelText: "PRODUCTo", hintText: "Nombre del Producto"),
+                    labelText: "PRODUCTo",
+                    hintText: "Nombre del Producto",
+                  ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
                       return "Completar el ampo";
@@ -99,6 +133,7 @@ class _ProductAddEditAdminPageState extends State<ProductAddEditAdminPage> {
                   height: 10.0,
                 ),
                 TextFormField(
+                  controller: _descriptionController,
                   decoration: InputDecoration(
                       labelText: "Description",
                       hintText: "DESCRIPTION del Producto"),
@@ -112,10 +147,12 @@ class _ProductAddEditAdminPageState extends State<ProductAddEditAdminPage> {
                 DropdownButtonFormField<String>(
                   style: TextStyle(color: Colors.black87),
                   decoration: InputDecoration(
-                      labelText: "Categoria",
+                      labelText: "Categorias",
                       hintText: "--Selecciona una categoria--"),
                   value: selectCategory,
-                  onChanged: (String? value) {},
+                  onChanged: (String? value) {
+                    print(value);
+                  },
                   items: categories
                       .map(
                         (e) => DropdownMenuItem<String>(
@@ -129,6 +166,7 @@ class _ProductAddEditAdminPageState extends State<ProductAddEditAdminPage> {
                   height: 10.0,
                 ),
                 TextFormField(
+                  controller: _priceController,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                       labelText: "pRECIO", hintText: "Precio del Producto"),
@@ -143,6 +181,7 @@ class _ProductAddEditAdminPageState extends State<ProductAddEditAdminPage> {
                   height: 10.0,
                 ),
                 TextFormField(
+                  controller: _timeController,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                       labelText: "Tiempo", hintText: "Tiempo de preparacion"),
@@ -157,6 +196,7 @@ class _ProductAddEditAdminPageState extends State<ProductAddEditAdminPage> {
                   height: 10.0,
                 ),
                 TextFormField(
+                  controller: _rateController,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                       labelText: "Puntaje", hintText: "Puntaje del producto"),
@@ -173,17 +213,12 @@ class _ProductAddEditAdminPageState extends State<ProductAddEditAdminPage> {
                 Row(
                   children: [
                     Expanded(
-                      child: TextFormField(
+                      child: TextField(
                         controller: _ingredientController,
                         decoration: InputDecoration(
                             labelText: "Ingrediente",
                             hintText: "Ingrediente del producto"),
-                        validator: (String? value) {
-                          if (value == null || value.isEmpty) {
-                            return "Completar el ampo";
-                          }
-                          return null;
-                        },
+
                       ),
                     ),
                     SizedBox(
@@ -264,7 +299,6 @@ class _ProductAddEditAdminPageState extends State<ProductAddEditAdminPage> {
                           File(image!.path),
                           fit: BoxFit.cover,
                         ),
-
                       )
                     : Text(
                         "No hay Imagen",
