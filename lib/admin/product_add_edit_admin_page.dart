@@ -18,10 +18,10 @@ class _ProductAddEditAdminPageState extends State<ProductAddEditAdminPage> {
   final _formKey = GlobalKey<FormState>();
 
   FirestoreService _categoryFirestoreService =
-      new FirestoreService(collection: 'products');
+      new FirestoreService(collection: 'categories');
 
   FirestoreService _productFirestoreService =
-  new FirestoreService(collection: 'categories');
+  new FirestoreService(collection: 'products');
 
   firebase_storage.FirebaseStorage _storage =
       firebase_storage.FirebaseStorage.instance;
